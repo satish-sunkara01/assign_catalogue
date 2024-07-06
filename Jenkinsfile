@@ -6,12 +6,12 @@ pipeline {
     }
     environment { 
         packageVersion = ''
-        nexusURL = '34.203.219.136:8081'
+        // nexusURL = '34.203.219.136:8081'
     }
-    options {
-        timeout(time: 1, unit: 'HOURS')
-        disableConcurrentBuilds()
-    }
+    // options {
+    //     timeout(time: 1, unit: 'HOURS')
+    //     disableConcurrentBuilds()
+    // }
     // parameters {
     //     // string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 
