@@ -6,7 +6,7 @@ pipeline {
     }
     environment { 
         packageVersion = ''
-        // nexusURL = '34.203.219.136:8081'
+        nexusURL = '172.31.42.201:8081'
     }
     // options {
     //     timeout(time: 1, unit: 'HOURS')
@@ -64,25 +64,25 @@ pipeline {
                 """
             }
         }
-        // stage('Publish Artifact') {
-        //     steps {
-        //          nexusArtifactUploader(
-        //             nexusVersion: 'nexus3',
-        //             protocol: 'http',
-        //             nexusUrl: "${nexusURL}",
-        //             groupId: 'com.roboshop',
-        //             version: "${packageVersion}",
-        //             repository: 'catalogue',
-        //             credentialsId: 'nexus-auth',
-        //             artifacts: [
-        //                 [artifactId: 'catalogue',
-        //                 classifier: '',
-        //                 file: 'catalogue.zip',
-        //                 type: 'zip']
-        //             ]
-        //         )
-        //     }
-        // }
+        stage('Publish Artifact') {
+            steps {
+                 nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${nexusURL}",
+                    groupId: 'com.roboshop',
+                    version: "${packageVersion}",
+                    repository: 'catalogue',
+                    credentialsId: 'nexus-auth',
+                    artifacts: [
+                        [artifactId: 'catalogue',
+                        classifier: '',
+                        file: 'catalogue.zip',
+                        type: 'zip']
+                    ]
+                )
+            }
+        }
         // stage('Deploy') {
         //     when {
         //         expression{
