@@ -6,17 +6,17 @@ pipeline {
     }
     environment { 
         packageVersion = ''
-        nexusURL = '172.31.5.95:8081'
+        // nexusURL = '172.31.5.95:8081'
     }
-    options {
-        timeout(time: 1, unit: 'HOURS')
-        disableConcurrentBuilds()
-    }
-    parameters {
+    // options {
+    //     timeout(time: 1, unit: 'HOURS')
+    //     disableConcurrentBuilds()
+    // }
+    // parameters {
 
-        booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
+    //     booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
 
-    }
+    // }
     // build
     stages {
         stage('Get the version') {
@@ -58,41 +58,7 @@ pipeline {
                 """
             }
         }
-        stage('Publish Artifact') {
-            steps {
-                 nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: "${nexusURL}",
-                    groupId: 'com.roboshop',
-                    version: "${packageVersion}",
-                    repository: 'catalogue',
-                    credentialsId: 'nexus-auth',
-                    artifacts: [
-                        [artifactId: 'catalogue',
-                        classifier: '',
-                        file: 'catalogue.zip',
-                        type: 'zip']
-                    ]
-                )
-            }
-        }
-        stage('Deploy') {
-            when {
-                expression{
-                    params.Deploy == 'true'
-                }
-            }
-            steps {
-                script {
-                        def params = [
-                            string(name: 'version', value: "$packageVersion"),
-                            string(name: 'environment', value: "dev")
-                        ]
-                        build job: "catalogue-deploy", wait: true, parameters: params
-                    }
-            }
-        }
+        
     }
     // post build
     post { 
